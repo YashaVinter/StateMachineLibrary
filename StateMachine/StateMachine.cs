@@ -213,5 +213,6 @@ namespace StateMachineLibrary
             return ret;
         }
 
+        public void test() { }
     }
 }
