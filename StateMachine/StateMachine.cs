@@ -213,6 +213,8 @@ namespace StateMachineLibrary
             return ret;
         }
 
-        public void test() { }
+        public void test() {
+            int a = 1;
+        }
     }
 }
