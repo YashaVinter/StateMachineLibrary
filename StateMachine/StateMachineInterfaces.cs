@@ -36,13 +36,7 @@ namespace StateMachineLibrary
         internal Dictionary<string, IState> stateDictionary { get; private protected set; } = null;
         internal Dictionary<string, ITransition> transitionDictionary { get;  private protected set; } = null; // TODO разобратьс япочему есть доступ несмотря на protected
         public string currentState { get; protected set; } = null;
-
-        public StateMachineBase(List<string> states, List<string> transitions, string startState)
-        {
-            DictionaryBilder(states, transitions);
-            this.currentState = startState;
-        }
-        protected abstract void DictionaryBilder(List<string> states, List<string> transitions);
+        //protected abstract void DictionaryBilder(List<string> states, List<string> transitions);
 
         public abstract void AddAction(string state, Action<string> action);
         public abstract void RemoveAction(string state, Action<string> action);

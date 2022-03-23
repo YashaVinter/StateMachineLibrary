@@ -59,20 +59,25 @@ namespace StateMachineLibrary
     }
     public class StateMachine : StateMachineBase
     {
-        public StateMachine(List<string> states, List<string> transitions, string startState) : base(states, transitions, startState)
+        public StateMachine(ISet<string> states, ISet<string> transitions, string startState)
         {
-            
+            //creates stateDictionary and transitionDictionary
+            DictionaryBilder(states, transitions);
+            this.currentState = startState;
+            SortedSet<string> ss;
+            HashSet<string> hs;
         }
-        protected override void DictionaryBilder(List<string> stateNames, List<string> transitionNames)
+        protected /*override*/ void DictionaryBilder(ISet<string> stateNames, ISet<string> transitionNames)
         {
             stateDictionary = new Dictionary<string, IState>();
             transitionDictionary = new Dictionary<string, ITransition>();
-
+            /// create stateDictionary
             foreach (var stateName in stateNames)
             {
                 State state = new State(stateName);
                 stateDictionary.Add(stateName, state);
             }
+            /// create transitionDictionary
             foreach (var transitionName in transitionNames)
             {
                 var names = transitionName.Split(new char[] { ':'});
@@ -84,13 +89,13 @@ namespace StateMachineLibrary
                 Transition transition = new Transition(transitionName) { entryState = entryState, endState = endState };
                 transitionDictionary.Add(transitionName, transition);
             }
+            //add transitions to every state
             foreach (var state in stateDictionary.Values)
             {
                 var foundTransitions = transitionDictionary.Values.Select(x=>x).Where(x => x.entryState.name == state.name).ToList();
                 state.transitions = foundTransitions;
             }
         }
-
         public override void AddAction(string state, Action<string> action)
         {
             stateDictionary[state].action += action;
