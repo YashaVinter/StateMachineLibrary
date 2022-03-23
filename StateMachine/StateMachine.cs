@@ -9,7 +9,7 @@ namespace StateMachineLibrary
     public class State : IState
     {
         public string name { get; set; }
-        public List<ITransition> transitions { get; set; } = null!;
+        public ISet<ITransition> transitions { get; set; } = null!;
 
         public event Action<string>? action = null;
 
@@ -64,10 +64,13 @@ namespace StateMachineLibrary
             //creates stateDictionary and transitionDictionary
             DictionaryBilder(states, transitions);
             this.currentState = startState;
-            SortedSet<string> ss;
-            HashSet<string> hs;
         }
-        protected /*override*/ void DictionaryBilder(ISet<string> stateNames, ISet<string> transitionNames)
+        /// <summary>
+        /// initialaze stateDictionary and transitionDictionary
+        /// </summary>
+        /// <param name="stateNames"></param>
+        /// <param name="transitionNames"></param>
+        protected override void DictionaryBilder(ISet<string> stateNames, ISet<string> transitionNames)
         {
             stateDictionary = new Dictionary<string, IState>();
             transitionDictionary = new Dictionary<string, ITransition>();
@@ -92,7 +95,7 @@ namespace StateMachineLibrary
             //add transitions to every state
             foreach (var state in stateDictionary.Values)
             {
-                var foundTransitions = transitionDictionary.Values.Select(x=>x).Where(x => x.entryState.name == state.name).ToList();
+                var foundTransitions = transitionDictionary.Values.Select(x=>x).Where(x => x.entryState.name == state.name).ToHashSet();
                 state.transitions = foundTransitions;
             }
         }

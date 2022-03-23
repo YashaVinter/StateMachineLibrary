@@ -17,7 +17,7 @@ namespace StateMachineLibrary
     }
     public interface IState : Iname
     {
-        internal List<ITransition> transitions { get; set; }
+        internal ISet<ITransition> transitions { get; set; }
 
         event Action<string>? action;
         event FunctionHandler? functionHandler;
@@ -36,7 +36,7 @@ namespace StateMachineLibrary
         internal Dictionary<string, IState> stateDictionary { get; private protected set; } = null;
         internal Dictionary<string, ITransition> transitionDictionary { get;  private protected set; } = null; // TODO разобратьс япочему есть доступ несмотря на protected
         public string currentState { get; protected set; } = null;
-        //protected abstract void DictionaryBilder(List<string> states, List<string> transitions);
+        protected abstract void DictionaryBilder(ISet<string> states, ISet<string> transitions);
 
         public abstract void AddAction(string state, Action<string> action);
         public abstract void RemoveAction(string state, Action<string> action);
