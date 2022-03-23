@@ -117,6 +117,11 @@ namespace StateMachineLibrary
         public void AddFunctionHandler(string state, FunctionHandler functionHandler) {
             stateDictionary[state].functionHandler += functionHandler;
         }
+        /// <summary>
+        /// key - state, value - FunctionHandler
+        /// </summary>
+        /// <param name="actionsDictionary"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public void AddFunctionHandler(Dictionary<string, FunctionHandler> actionsDictionary)
         {
             if(actionsDictionary is null)
@@ -147,6 +152,11 @@ namespace StateMachineLibrary
                 enumerator.MoveNext();
             }
         }
+        /// <summary>
+        /// key - transition, value - criteria
+        /// </summary>
+        /// <param name="criteriaDictionary"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public void AddCriteraRange(Dictionary<string, Predicate<string>> criteriaDictionary)
         {
             if (criteriaDictionary is null)
