@@ -33,8 +33,8 @@ namespace StateMachineLibrary
     }
     public abstract class StateMachineBase
     {
-        internal Dictionary<string, IState> stateDictionary { get; private protected set; } = null;
-        internal Dictionary<string, ITransition> transitionDictionary { get;  private protected set; } = null; // TODO разобратьс япочему есть доступ несмотря на protected
+        public Dictionary<string, IState> stateDictionary { get; private protected set; } = null;
+        public Dictionary<string, ITransition> transitionDictionary { get;  private protected set; } = null; // TODO разобратьс япочему есть доступ несмотря на protected
         public string currentState { get; protected set; } = null;
         protected abstract void DictionaryBilder(ISet<string> states, ISet<string> transitions);
 

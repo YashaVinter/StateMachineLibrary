@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <Version>$(VersionPrefix)</Version>
     <Description>Final State Machine v1</Description>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
 </Project>
