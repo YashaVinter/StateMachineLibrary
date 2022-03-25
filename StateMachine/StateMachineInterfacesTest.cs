@@ -13,8 +13,13 @@ namespace StateMachineTest
     public delegate object FunctionHandler (IStateModel stateModel, CommandBase commandBase);
     public abstract class CommandBase : EventArgs
     {
-        public abstract string command { get; set; }
+        public string command { get; set; }
+        public CommandBase(string command)
+        {
+            this.command = command;
+        }
     }
+
     public interface Iname
     {
         string name { get; set; }
@@ -52,5 +57,26 @@ namespace StateMachineTest
         ITransitionCriteria transitionCriteria { get; set; }
         public bool CheckCriteria(string command);
     }
+    // TEST
+    public abstract class EventDataBase
+    { }
+    public abstract class InputDataBase : CommandBase
+    {
+        protected InputDataBase(string command) : base(command)
+        {
 
+        }
+    }
+    public interface IStateData
+    {
+        EventDataBase eventData { get; set; }
+        InputDataBase inputData { get; set; }
+    }
+    public interface IState2
+    {
+        IStateModel stateModel { get; set; }
+        IStateEvent stateEvent { get; set; }
+        IStateData stateData { get; set; }
+        public object DoCommand(InputDataBase inputData);
+    }
 }

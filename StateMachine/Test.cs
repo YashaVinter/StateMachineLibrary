@@ -14,7 +14,7 @@ namespace StateMachineTest
             StateModel model = new StateModel("one");
             model.transitions = null;
             StateEvent stateEventHome = new StateEvent(new BotImplementation().caseHome);
-            CommandBase caseHomeData = new CaseHomeData();
+            CommandBase caseHomeData = new CaseHomeData("");
 
 
             State stateHome = new State(model, stateEventHome, caseHomeData);
@@ -56,14 +56,14 @@ namespace StateMachineTest
             };
             var eventDataDict = new Dictionary<string, CommandBase>() 
             {
-                { "one",new CaseHomeData()},
-                { "two",new CaseHomeData()},
+                { "one",new CaseHomeData("")},
+                { "two",new CaseHomeData("")},
             };
             stateMachine.AddFunctionHandler(actDict);
             stateMachine.AddCriteraRange(criteriaDict);
             stateMachine.AddEventData(eventDataDict);
 
-            stateMachine.stateDictionary["one"].eventData = new CaseHomeData();
+            stateMachine.stateDictionary["one"].eventData = new CaseHomeData("");
             stateMachine.stateDictionary["one"].DoCommand("111");
             stateMachine.transitionDictionary["one:two"].CheckCriteria("111");
         }
@@ -73,7 +73,7 @@ namespace StateMachineTest
     {
         public object caseHome(IStateModel model, CommandBase args)
         {
-            var id = 111l;
+            var id = 111L;
             var text = "sending text";
             var buttons = new object();
             if (args is CaseHomeData data)
@@ -89,6 +89,10 @@ namespace StateMachineTest
     }
     public abstract class BotCommandBase : CommandBase
     {
+        protected BotCommandBase(string command) : base(command)
+        {
+        }
+
         public abstract object bot { get; set; }
         public abstract long chatId { get; set; }
         public abstract string text { get; set; }
@@ -97,11 +101,10 @@ namespace StateMachineTest
     public class CaseHomeData : BotCommandBase
     {
         public override object bot { get; set; }
-        public override long chatId { get; set; } = 15154l;
+        public override long chatId { get; set; } = 15154L;
         public override string text { get; set; } = "some text";
         public override object button { get; set; }
-        public override string command { get; set; }
-        public CaseHomeData()
+        public CaseHomeData(string command) : base(command)
         {
 
         }

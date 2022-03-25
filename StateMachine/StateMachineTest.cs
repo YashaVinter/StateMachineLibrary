@@ -85,4 +85,23 @@ namespace StateMachineTest
             this.transitionCriteria = transitionCriteria;
         }
     }
+
+    public class State2 : IState2
+    {
+        public IStateModel stateModel { get; set; }
+        public IStateEvent stateEvent { get; set; }
+        public IStateData stateData { get; set; }
+        public State2(IStateModel model, IStateEvent stateEvent, IStateData stateData)
+        {
+            this.stateModel = model;
+            this.stateEvent = stateEvent;
+            this.stateData = stateData;
+        }
+        public object DoCommand(InputDataBase inputData)
+        {
+            stateData.inputData = inputData;
+            //return stateEvent.InvokeEvent(stateData);
+            return null;
+        }
+    }
 }

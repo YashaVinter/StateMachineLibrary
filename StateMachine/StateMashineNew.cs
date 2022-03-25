@@ -98,5 +98,50 @@ namespace StateMachineTest
                 stateDictionary[state].eventData = eventData;
             }
         }
+
+        //public void Execute(string str)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        public object Execute(object sender, CommandBase commandBase)
+        {
+            try
+            {
+                string? transitionTo = CheckTransitions(currentState, commandBase.command);
+                if (transitionTo is null)
+                {
+                    return stateDictionary[currentState].DoCommand(commandBase.command);
+                }
+                else
+                {
+                    this.currentState = transitionTo;
+                    return stateDictionary[currentState].DoCommand(commandBase.command);
+                }
+
+            }
+            catch (Exception)
+            {
+                throw new NullReferenceException();
+            }
+        }
+        public string? CheckTransitions(string state, string command)
+        {
+            try
+            {
+                //return (from t in stateDictionary[state].transitions //TODO mb remove warning
+                //        where t.Criteria.Invoke(command)
+                //        select t.endState.name
+                //       ).FirstOrDefault();
+                return transitionDictionary.Values
+                    .Where(t => t.transitionModel.entryState.name == state && t.transitionCriteria.InvokePredicate(command))
+                    .Select(t =>t.transitionModel.endState.name).FirstOrDefault();
+
+            }
+            catch (Exception)
+            {
+                throw new NullReferenceException("Not added Criteria to transition");
+            }
+        }
+
     }
 }
