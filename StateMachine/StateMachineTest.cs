@@ -22,9 +22,9 @@ namespace StateMachineTest
     public class StateEvent : IStateEvent
     {
         public event FunctionHandler functionHandler;
-        public object InvokeEvent(IStateModel model, CommandBase args)
+        public object InvokeEvent(IStateData stateData)
         {
-            return functionHandler?.Invoke(model, args);
+            return functionHandler?.Invoke(stateData);
         }
         public StateEvent(FunctionHandler functionHandler)
         {
@@ -35,19 +35,21 @@ namespace StateMachineTest
     {
         public IStateModel stateModel { get; set; }
         public IStateEvent stateEvent { get; set; }
-        public CommandBase eventData { get; set; }
-        public State(IStateModel model, IStateEvent stateEvent, CommandBase eventData)
+        public IStateData stateData { get; set; }
+        public State(IStateModel model, IStateEvent stateEvent, IStateData stateData)
         {
             this.stateModel = model;
             this.stateEvent = stateEvent;
-            this.eventData = eventData;
+            this.stateData = stateData;
         }
-        public object DoCommand(string command)
+        public object DoCommand(InputDataBase inputData)
         {
-            eventData.command = command;
-            return stateEvent.InvokeEvent(stateModel, eventData);
+            stateData.inputData = inputData;
+            return stateEvent.InvokeEvent(stateData);
         }
     }
+    //
+
     // Transition
     public class TransitionModel : ITransitionModel
     {
@@ -85,23 +87,29 @@ namespace StateMachineTest
             this.transitionCriteria = transitionCriteria;
         }
     }
-
-    public class State2 : IState2
+    public class StateData : IStateData
     {
-        public IStateModel stateModel { get; set; }
-        public IStateEvent stateEvent { get; set; }
-        public IStateData stateData { get; set; }
-        public State2(IStateModel model, IStateEvent stateEvent, IStateData stateData)
-        {
-            this.stateModel = model;
-            this.stateEvent = stateEvent;
-            this.stateData = stateData;
-        }
-        public object DoCommand(InputDataBase inputData)
-        {
-            stateData.inputData = inputData;
-            //return stateEvent.InvokeEvent(stateData);
-            return null;
-        }
+        public EventDataBase eventData { get; set; } = null!;
+        public InputDataBase inputData { get; set; } = null!;
     }
+
+    //
+    //public class StateOld : IState
+    //{
+    //    public IStateModel stateModel { get; set; }
+    //    public IStateEvent stateEvent { get; set; }
+    //    public CommandBase eventData { get; set; }
+    //    public State(IStateModel model, IStateEvent stateEvent, CommandBase eventData)
+    //    {
+    //        this.stateModel = model;
+    //        this.stateEvent = stateEvent;
+    //        this.eventData = eventData;
+    //    }
+    //    public object DoCommand(string command)
+    //    {
+    //        eventData.command = command;
+    //        return stateEvent.InvokeEvent(stateModel, eventData);
+    //    }
+    //}
+    //
 }

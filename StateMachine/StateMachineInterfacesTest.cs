@@ -10,7 +10,7 @@ namespace StateMachineTest
     {
 
     }
-    public delegate object FunctionHandler (IStateModel stateModel, CommandBase commandBase);
+    public delegate object FunctionHandler (IStateData stateData);
     public abstract class CommandBase : EventArgs
     {
         public string command { get; set; }
@@ -31,15 +31,30 @@ namespace StateMachineTest
     public interface IStateEvent
     {
         event FunctionHandler functionHandler;
-        object InvokeEvent(IStateModel model, CommandBase args);
+        object InvokeEvent(IStateData stateData);
+    }
+    public abstract class EventDataBase
+    { }
+    public abstract class InputDataBase : CommandBase
+    {
+        protected InputDataBase(string command) : base(command)
+        {
+
+        }
+    }
+    public interface IStateData
+    {
+        EventDataBase eventData { get; set; }
+        InputDataBase inputData { get; set; }
     }
     public interface IState
     {
         IStateModel stateModel { get; set; }
         IStateEvent stateEvent { get; set; }
-        CommandBase eventData { get; set; }
-        public object DoCommand(string command);
+        IStateData stateData { get; set; }
+        public object DoCommand(InputDataBase inputData);
     }
+
     // Transition
     public interface ITransitionModel : Iname
     {
@@ -58,25 +73,13 @@ namespace StateMachineTest
         public bool CheckCriteria(string command);
     }
     // TEST
-    public abstract class EventDataBase
-    { }
-    public abstract class InputDataBase : CommandBase
-    {
-        protected InputDataBase(string command) : base(command)
-        {
 
-        }
-    }
-    public interface IStateData
-    {
-        EventDataBase eventData { get; set; }
-        InputDataBase inputData { get; set; }
-    }
-    public interface IState2
+
+    public interface IStateOld
     {
         IStateModel stateModel { get; set; }
         IStateEvent stateEvent { get; set; }
-        IStateData stateData { get; set; }
-        public object DoCommand(InputDataBase inputData);
+        CommandBase eventData { get; set; }
+        public object DoCommand(string command);
     }
 }

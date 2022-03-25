@@ -36,7 +36,7 @@ namespace StateMachineTest
             /// create stateDictionary
             foreach (var stateName in stateNames)
             {
-                State state = new State(new StateModel(stateName), new StateEvent(null), null);
+                State state = new State(new StateModel(stateName), new StateEvent(null), new StateData() ); //new StateData()
                 stateDictionary.Add(stateName, state);
             }
             /// create transitionDictionary
@@ -87,7 +87,7 @@ namespace StateMachineTest
                 transitionDictionary[transition].transitionCriteria.Criteria += criteria;
             }
         }
-        public void AddEventData(Dictionary<string, CommandBase> eventDataDictionary) 
+        public void AddEventData(Dictionary<string, EventDataBase> eventDataDictionary) 
         {
             if (eventDataDictionary is null)
                 throw new ArgumentNullException();
@@ -95,7 +95,7 @@ namespace StateMachineTest
             {
                 string state = eventDataPair.Key;
                 var eventData = eventDataPair.Value;
-                stateDictionary[state].eventData = eventData;
+                stateDictionary[state].stateData.eventData = eventData;
             }
         }
 
@@ -103,19 +103,19 @@ namespace StateMachineTest
         //{
         //    throw new NotImplementedException();
         //}
-        public object Execute(object sender, CommandBase commandBase)
+        public object Execute(InputDataBase InputData) // InputDataBase
         {
             try
             {
-                string? transitionTo = CheckTransitions(currentState, commandBase.command);
+                string? transitionTo = CheckTransitions(currentState, InputData.command);
                 if (transitionTo is null)
                 {
-                    return stateDictionary[currentState].DoCommand(commandBase.command);
+                    return stateDictionary[currentState].DoCommand(InputData);
                 }
                 else
                 {
                     this.currentState = transitionTo;
-                    return stateDictionary[currentState].DoCommand(commandBase.command);
+                    return stateDictionary[currentState].DoCommand(InputData);
                 }
 
             }

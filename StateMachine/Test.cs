@@ -10,62 +10,62 @@ namespace StateMachineTest
     {
         static void Main()
         {
-            // init state
-            StateModel model = new StateModel("one");
-            model.transitions = null;
-            StateEvent stateEventHome = new StateEvent(new BotImplementation().caseHome);
-            CommandBase caseHomeData = new CaseHomeData("");
+            //// init state
+            //StateModel model = new StateModel("one");
+            //model.transitions = null;
+            //StateEvent stateEventHome = new StateEvent(new BotImplementation().caseHome);
+            //CommandBase caseHomeData = new CaseHomeData("");
 
 
-            State stateHome = new State(model, stateEventHome, caseHomeData);
-            // execute state event
-            stateHome.DoCommand("toTwo");
-            // Transitions
-            TransitionModel transitionModel = new TransitionModel("one:two");
+            //State stateHome = new State(model, stateEventHome, caseHomeData);
+            //// execute state event
+            //stateHome.DoCommand("toTwo");
+            //// Transitions
+            //TransitionModel transitionModel = new TransitionModel("one:two");
 
-            string two = "two";
-            Predicate<string> crit = delegate (string s) { return s == two; };
-            TransitionCriteria transitionCriteria = new TransitionCriteria(crit);
-            Transition transition = new Transition(transitionModel, transitionCriteria);
-            transition.CheckCriteria(two);
-            //
-            State state1 = new State(new StateModel(""), new StateEvent(null), null);
-            Transition transition1 = new Transition(new TransitionModel(""), new TransitionCriteria(null));
+            //string two = "two";
+            //Predicate<string> crit = delegate (string s) { return s == two; };
+            //TransitionCriteria transitionCriteria = new TransitionCriteria(crit);
+            //Transition transition = new Transition(transitionModel, transitionCriteria);
+            //transition.CheckCriteria(two);
+            ////
+            //State state1 = new State(new StateModel(""), new StateEvent(null), null);
+            //Transition transition1 = new Transition(new TransitionModel(""), new TransitionCriteria(null));
 
-            ISet<string> states = new HashSet<string>() 
-            {
-                "one","two","three"
-            };
-            ISet<string> transitions = new HashSet<string>()
-            {
-                "one:two","two:three","three:one"
-            };
-            StateMachine stateMachine = new StateMachine(states, transitions, "one");
+            //ISet<string> states = new HashSet<string>() 
+            //{
+            //    "one","two","three"
+            //};
+            //ISet<string> transitions = new HashSet<string>()
+            //{
+            //    "one:two","two:three","three:one"
+            //};
+            //StateMachine stateMachine = new StateMachine(states, transitions, "one");
 
             
-            var actDict = new Dictionary<string, FunctionHandler>() 
-            {
-                { "one",new BotImplementation().caseHome},
-                { "two",new BotImplementation().caseHome}
-            };
+            //var actDict = new Dictionary<string, FunctionHandler>() 
+            //{
+            //    { "one",new BotImplementation().caseHome},
+            //    { "two",new BotImplementation().caseHome}
+            //};
 
-            var criteriaDict = new Dictionary<string, Predicate<string>>() 
-            {
-                {"one:two",crit },
-                {"two:three",crit }
-            };
-            var eventDataDict = new Dictionary<string, CommandBase>() 
-            {
-                { "one",new CaseHomeData("")},
-                { "two",new CaseHomeData("")},
-            };
-            stateMachine.AddFunctionHandler(actDict);
-            stateMachine.AddCriteraRange(criteriaDict);
-            stateMachine.AddEventData(eventDataDict);
+            //var criteriaDict = new Dictionary<string, Predicate<string>>() 
+            //{
+            //    {"one:two",crit },
+            //    {"two:three",crit }
+            //};
+            //var eventDataDict = new Dictionary<string, CommandBase>() 
+            //{
+            //    { "one",new CaseHomeData("")},
+            //    { "two",new CaseHomeData("")},
+            //};
+            //stateMachine.AddFunctionHandler(actDict);
+            //stateMachine.AddCriteraRange(criteriaDict);
+            //stateMachine.AddEventData(eventDataDict);
 
-            stateMachine.stateDictionary["one"].eventData = new CaseHomeData("");
-            stateMachine.stateDictionary["one"].DoCommand("111");
-            stateMachine.transitionDictionary["one:two"].CheckCriteria("111");
+            //stateMachine.stateDictionary["one"].eventData = new CaseHomeData("");
+            //stateMachine.stateDictionary["one"].DoCommand("111");
+            //stateMachine.transitionDictionary["one:two"].CheckCriteria("111");
         }
     }
 
