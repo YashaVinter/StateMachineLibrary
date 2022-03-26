@@ -9,4 +9,8 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Transitions\" />
+  </ItemGroup>
+
 </Project>

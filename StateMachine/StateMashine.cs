@@ -4,35 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StateMachineTest
+
+namespace StateMachineLibrary
 {
-    internal class StateMashineNew
-    {
-    }
-    public abstract class StateMachineBase
-    {
-        public Dictionary<string, IState> stateDictionary { get; private protected set; } = null;
-        public Dictionary<string, ITransition> transitionDictionary { get; private protected set; } = null; // TODO разобратьс япочему есть доступ несмотря на protected
-        public string currentState { get; protected set; } = null;
-        protected abstract void DictionaryBilder(ISet<string> states, ISet<string> transitions);
-    }
+
     public class StateMachine : StateMachineBase
     {
         public StateMachine(ISet<string> states, ISet<string> transitions, string startState)
         {
             //creates stateDictionary and transitionDictionary
-            DictionaryBilder(states, transitions);
+            (this.stateDictionary, this.transitionDictionary) = DictionaryBilder(states, transitions);
             this.currentState = startState;
         }
         /// <summary>
         /// initialaze stateDictionary and transitionDictionary
         /// </summary>
-        /// <param name="stateNames"></param>
-        /// <param name="transitionNames"></param>
-        protected override void DictionaryBilder(ISet<string> stateNames, ISet<string> transitionNames)
+        protected override (Dictionary<string, IState> stateDictionary, Dictionary<string, ITransition> transitionDictionary)
+            DictionaryBilder(ISet<string> stateNames, ISet<string> transitionNames)
         {
-            stateDictionary = new Dictionary<string, IState>();
-            transitionDictionary = new Dictionary<string, ITransition>();
+            var stateDictionary = new Dictionary<string, IState>();
+            var transitionDictionary = new Dictionary<string, ITransition>();
             /// create stateDictionary
             foreach (var stateName in stateNames)
             {
@@ -58,13 +49,15 @@ namespace StateMachineTest
             //add transitions to every state
             foreach (var state in stateDictionary.Values)
             {
-                var foundTransitions = transitionDictionary.Values.Where(t => t.transitionModel.entryState.name == state.stateModel.name).Select(t => t.transitionModel).ToHashSet();
+                var foundTransitions = transitionDictionary.Values
+                    .Where(t => t.transitionModel.entryState.name == state.stateModel.name)
+                    .Select(t => t.transitionModel).ToHashSet();
                 //var foundTransitions = transitionDictionary.Values.Select(x => x).Where(x => x.entryState.name == state.name).ToHashSet();
                 state.stateModel.transitions = foundTransitions;
                 //state.transitions = foundTransitions;
             }
+            return (stateDictionary, transitionDictionary);
         }
-
         public void AddFunctionHandler(Dictionary<string, FunctionHandler> actionsDictionary)
         {
             if (actionsDictionary is null)
@@ -99,10 +92,6 @@ namespace StateMachineTest
             }
         }
 
-        //public void Execute(string str)
-        //{
-        //    throw new NotImplementedException();
-        //}
         public object Execute(InputDataBase InputData) // InputDataBase
         {
             try
@@ -142,6 +131,8 @@ namespace StateMachineTest
                 throw new NullReferenceException("Not added Criteria to transition");
             }
         }
-
+        public void test() 
+        {
+        }
     }
 }

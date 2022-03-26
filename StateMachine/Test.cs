@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StateMachineTest
+using StateMachineLibrary;
+
+namespace StateMachineLibraryTest
 {
     internal class Test
     {
