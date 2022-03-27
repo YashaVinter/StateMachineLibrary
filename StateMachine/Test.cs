@@ -112,3 +112,5 @@ namespace StateMachineLibraryTest
         }
     }
 }
+
+// before merging master
