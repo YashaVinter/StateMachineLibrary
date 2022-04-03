@@ -30,8 +30,13 @@ namespace StateMachineLibrary
     }
     public class StateData : IStateData
     {
-        public EventDataBase eventData { get; set; } = null!;
-        public InputDataBase inputData { get; set; } = null!;
+        public EventDataBase eventData { get; set; }
+        public InputDataBase inputData { get; set; }
+        public StateData(EventDataBase eventData, InputDataBase inputData)
+        {
+            this.eventData = eventData;
+            this.inputData = inputData;
+        }
     }
     public class State : IState
     {

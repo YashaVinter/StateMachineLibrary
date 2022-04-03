@@ -13,7 +13,7 @@ namespace StateMachineLibrary
     }
     public interface ITransitionCriteria
     {
-        event Predicate<string>? Criteria;
+        event Predicate<string>? criteria;
         bool InvokePredicate(string input);
     }
     public interface ITransition

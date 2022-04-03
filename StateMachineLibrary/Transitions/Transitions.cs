@@ -19,14 +19,14 @@ namespace StateMachineLibrary
     }
     public class TransitionCriteria : ITransitionCriteria
     {
-        public event Predicate<string> Criteria;
+        public event Predicate<string> criteria;
         public bool InvokePredicate(string input)
         {
-            return Criteria.Invoke(input);
+            return criteria.Invoke(input);
         }
-        public TransitionCriteria(Predicate<string> Criteria)
+        public TransitionCriteria(Predicate<string> criteria)
         {
-            this.Criteria = Criteria;
+            this.criteria = criteria;
         }
     }
     public class Transition : ITransition

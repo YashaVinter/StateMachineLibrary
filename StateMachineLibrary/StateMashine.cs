@@ -77,7 +77,7 @@ namespace StateMachineLibrary
             {
                 string transition = criteriaPair.Key;
                 Predicate<string> criteria = criteriaPair.Value;
-                transitionDictionary[transition].transitionCriteria.Criteria += criteria;
+                transitionDictionary[transition].transitionCriteria.criteria += criteria;
             }
         }
         public void AddEventData(Dictionary<string, EventDataBase> eventDataDictionary) 
