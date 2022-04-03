@@ -27,7 +27,7 @@ namespace StateMachineLibrary
             /// create stateDictionary
             foreach (var stateName in stateNames)
             {
-                State state = new State(new StateModel(stateName), new StateEvent(null), new StateData() ); //new StateData()
+                State state = new State(new StateModel(stateName), new StateEvent(null), new StateData(null,null) ); //new StateData()
                 stateDictionary.Add(stateName, state);
             }
             /// create transitionDictionary
