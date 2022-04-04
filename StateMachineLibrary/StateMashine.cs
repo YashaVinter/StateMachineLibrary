@@ -12,13 +12,14 @@ namespace StateMachineLibrary
     {
         public StateMachine(IEnumerable<IState> states, IEnumerable<ITransition> transitions, string startState)
         {
-            //states.ToDictionary(s => s.stateModel.name);
-            this.stateDictionary = new Dictionary<string,IState>(
-                from s in states
-                select new KeyValuePair<string, IState>(s.stateModel.name, s));
-            this.transitionDictionary = new Dictionary<string, ITransition>(
-                from t in transitions
-                select new KeyValuePair<string, ITransition>(t.transitionModel.name, t));
+            this.stateDictionary = states.ToDictionary(s => s.stateModel.name);
+            this.transitionDictionary = transitions.ToDictionary(t => t.transitionModel.name);
+            //this.stateDictionary = new Dictionary<string,IState>(
+            //    from s in states
+            //    select new KeyValuePair<string, IState>(s.stateModel.name, s));
+            //this.transitionDictionary = new Dictionary<string, ITransition>(
+            //    from t in transitions
+            //    select new KeyValuePair<string, ITransition>(t.transitionModel.name, t));
             this.currentState = startState;
         }
         public StateMachine(ISet<string> states, ISet<string> transitions, string startState)
