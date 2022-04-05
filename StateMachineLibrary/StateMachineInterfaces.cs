@@ -26,8 +26,8 @@ namespace StateMachineLibrary
         public Dictionary<string, IState> stateDictionary { get; private protected set; } = null;
         public Dictionary<string, ITransition> transitionDictionary { get; private protected set; } = null; // TODO разобратьс япочему есть доступ несмотря на protected
         public string currentState { get; protected set; } = null;
-        protected abstract (Dictionary<string, IState> stateDictionary, Dictionary<string, ITransition> transitionDictionary)
-            DictionaryBilder(ISet<string> states, ISet<string> transitions);
+        //protected abstract (Dictionary<string, IState> stateDictionary, Dictionary<string, ITransition> transitionDictionary)
+        //    DictionaryBilder(ISet<string> states, ISet<string> transitions);
     }
     public interface IStateMashineFactory
     {
