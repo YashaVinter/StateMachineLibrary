@@ -10,6 +10,12 @@ namespace StateMachineLibrary
 
     public class StateMachine : StateMachineBase
     {
+        public StateMachine(IStateMashineFactory stateMashineFactory)
+        {
+            this.stateDictionary = stateMashineFactory.BuildStateDictionary();
+            this.transitionDictionary = stateMashineFactory.BuildTransitionDictionary();
+            this.currentState = stateMashineFactory.BuildStartState();
+        }
         public StateMachine(IEnumerable<IState> states, IEnumerable<ITransition> transitions, string startState)
         {
             this.stateDictionary = states.ToDictionary(s => s.stateModel.name);
@@ -39,7 +45,7 @@ namespace StateMachineLibrary
             /// create stateDictionary
             foreach (var stateName in stateNames)
             {
-                State state = new State(new StateModel(stateName), new StateEvent(null), new StateData(null,null) ); //new StateData()
+                State state = new State(new StateModel(stateName), new StateEvent(null), new StateData(null, null)); //new StateData()
                 stateDictionary.Add(stateName, state);
             }
             /// create transitionDictionary
@@ -51,9 +57,10 @@ namespace StateMachineLibrary
                 State entryState = stateDictionary[entryStateName] as State;
                 State endState = stateDictionary[endStateName] as State;
 
-                TransitionModel transitionModel = new TransitionModel(transitionName) 
-                { 
-                    entryState = entryState.stateModel, endState = endState.stateModel 
+                TransitionModel transitionModel = new TransitionModel(transitionName)
+                {
+                    entryState = entryState.stateModel,
+                    endState = endState.stateModel
                 };
                 Transition transition = new Transition(transitionModel, new TransitionCriteria(null));
                 transitionDictionary.Add(transitionName, transition);
@@ -92,7 +99,7 @@ namespace StateMachineLibrary
                 transitionDictionary[transition].transitionCriteria.criteria += criteria;
             }
         }
-        public void AddEventData(Dictionary<string, EventDataBase> eventDataDictionary) 
+        public void AddEventData(Dictionary<string, EventDataBase> eventDataDictionary)
         {
             if (eventDataDictionary is null)
                 throw new ArgumentNullException();

@@ -29,4 +29,11 @@ namespace StateMachineLibrary
         protected abstract (Dictionary<string, IState> stateDictionary, Dictionary<string, ITransition> transitionDictionary)
             DictionaryBilder(ISet<string> states, ISet<string> transitions);
     }
+    public interface IStateMashineFactory
+    {
+        Dictionary<string, IState> BuildStateDictionary();
+        Dictionary<string, ITransition> BuildTransitionDictionary();
+        string BuildStartState();
+
+    }
 }
