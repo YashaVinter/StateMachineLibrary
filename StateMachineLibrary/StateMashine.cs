@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace StateMachineLibrary
 {
-
-    public class StateMachine : StateMachineBase
+    public class StateMachine //: StateMachineBase
     {
+        public Dictionary<string, IState> stateDictionary { get; private protected set; } //= null;
+        public Dictionary<string, ITransition> transitionDictionary { get; private protected set; } // = null; // TODO разобратьс япочему есть доступ несмотря на protected
+        public string currentState { get; protected set; }
         public StateMachine(IStateMashineFactory stateMashineFactory)
         {
             this.stateDictionary = stateMashineFactory.BuildStateDictionary();
@@ -110,7 +112,6 @@ namespace StateMachineLibrary
         //        stateDictionary[state].stateData.eventData = eventData;
         //    }
         //}
-
         public object Execute(InputDataBase InputData) // InputDataBase
         {
             try
@@ -168,9 +169,6 @@ namespace StateMachineLibrary
             {
                 throw new NullReferenceException("Not added Criteria to transition");
             }
-        }
-        public void test() 
-        {
         }
     }
 }
