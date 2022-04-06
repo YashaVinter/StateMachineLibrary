@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StateMachineLibrary
 {
-    public interface IStateModel : Iname
+    public interface IStateModel : IName
     {
         ISet<ITransition>? transitions { get; set; }
     }

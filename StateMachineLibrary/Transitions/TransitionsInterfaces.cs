@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StateMachineLibrary
 {
-    public interface ITransitionModel : Iname
+    public interface ITransitionModel : IName
     {
         IState? entryState { get; set; }
         IState? endState { get; set; }
