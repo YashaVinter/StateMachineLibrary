@@ -9,7 +9,7 @@ namespace StateMachineLibrary
 {
     public interface IStateModel : Iname
     {
-        ISet<ITransitionModel> transitions { get; set; }
+        ISet<ITransition>? transitions { get; set; }
     }
     public interface IStateEvent
     {

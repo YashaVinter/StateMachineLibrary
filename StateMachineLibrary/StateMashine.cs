@@ -136,23 +136,28 @@ namespace StateMachineLibrary
         {
             try
             {
-                var v1 = stateDictionary[state].stateModel.transitions.Select(t => t.name);
-                var v2 = (from tn in (from t in stateDictionary[state].stateModel.transitions select t.name) // v1
-                          where transitionDictionary[tn].transitionCriteria.InvokePredicate(command)
-                          select tn.Split(':')[1])
-                         .FirstOrDefault();
+                return (from t in stateDictionary[state].stateModel.transitions
+                        where t.transitionCriteria.InvokePredicate(command)
+                        select t.transitionModel!.endState!.stateModel.name)
+                       .FirstOrDefault();
+                //var v1 = stateDictionary[state].stateModel.transitions.Select(t => t.name);
+                //var v2 = (from tn in (from t in stateDictionary[state].stateModel.transitions select t.name) // v1
+                //          where transitionDictionary[tn].transitionCriteria.InvokePredicate(command)
+                //          select tn.Split(':')[1])
+                //         .FirstOrDefault();
 
-                var v3 = (from t in transitionDictionary.Values
-                         where t.transitionModel.entryState.name == state
-                         where t.transitionCriteria.InvokePredicate(command)
-                         select t.transitionModel.endState.name)
-                         .FirstOrDefault();
-                // worked
-                return (from t1 in stateDictionary[state].stateModel.transitions //TODO mb remove warning
-                        join t2 in transitionDictionary.Values on t1 equals t2.transitionModel
-                        where t2.transitionCriteria.InvokePredicate(command)
-                        select t2.transitionModel.endState.name)
-                        .FirstOrDefault();
+                //var v3 = (from t in transitionDictionary.Values
+                //         where t.transitionModel.entryState.name == state
+                //         where t.transitionCriteria.InvokePredicate(command)
+                //         select t.transitionModel.endState.name)
+                //         .FirstOrDefault();
+                //// worked
+                //return (from t1 in stateDictionary[state].stateModel.transitions //TODO mb remove warning
+                //        join t2 in transitionDictionary.Values on t1 equals t2.transitionModel
+                //        where t2.transitionCriteria.InvokePredicate(command)
+                //        select t2.transitionModel.endState.name)
+                //        .FirstOrDefault();
+
                 //// worked
                 //return transitionDictionary.Values
                 //    .Where(t => t.transitionModel.entryState.name == state && t.transitionCriteria.InvokePredicate(command))

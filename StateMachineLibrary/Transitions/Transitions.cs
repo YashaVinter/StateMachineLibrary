@@ -9,8 +9,8 @@ namespace StateMachineLibrary
 {
     public class TransitionModel : ITransitionModel
     {
-        public IStateModel entryState { get; set; }
-        public IStateModel endState { get; set; }
+        public IState? entryState { get; set; }
+        public IState? endState { get; set; }
         public string name { get; set; }
         public TransitionModel(string name)
         {

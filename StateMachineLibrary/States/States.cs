@@ -10,7 +10,7 @@ namespace StateMachineLibrary
     public class StateModel : IStateModel
     {
         public string name { get; set; }
-        public ISet<ITransitionModel> transitions { get; set; }
+        public ISet<ITransition>? transitions { get; set; }
         public StateModel(string name)
         {
             this.name = name;
@@ -21,7 +21,7 @@ namespace StateMachineLibrary
         public event FunctionHandler functionHandler;
         public object InvokeEvent(IStateData stateData)
         {
-            return functionHandler?.Invoke(stateData);
+            return functionHandler.Invoke(stateData);
         }
         public StateEvent(FunctionHandler functionHandler)
         {

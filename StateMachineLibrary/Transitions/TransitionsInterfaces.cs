@@ -8,12 +8,12 @@ namespace StateMachineLibrary
 {
     public interface ITransitionModel : Iname
     {
-        IStateModel entryState { get; set; }
-        IStateModel endState { get; set; }
+        IState? entryState { get; set; }
+        IState? endState { get; set; }
     }
     public interface ITransitionCriteria
     {
-        event Predicate<string>? criteria;
+        event Predicate<string> criteria;
         bool InvokePredicate(string input);
     }
     public interface ITransition
